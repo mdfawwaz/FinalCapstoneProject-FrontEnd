@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Tile</title>
+</head>
+
+<body>
+    <div class="product-tiles">
+        <div class="product-tile" *ngFor="let product of products" (click)="selectProduct(product)">
+            <div class="product-image">
+                <img class="product-image" [src]="product.imageURL" alt="{{ product.name }}">
+            </div>
+            <div class="product-details">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <h3>Available: {{ product.maxProductsPerLocation }}</h3>
+                <p class="product-description">{{ product.details }}</p>
+                <div class="price-container">
+                    <p class="product-price">Price: $ {{ product.price }}</p>
+                </div>
+                
+                <div class="buttons-container">
+                    <button
+                      class="features-button styled-button"
+                      (click)="showFeatures = !showFeatures; setDialogPosition($event)"
+                      (mouseenter)="showFeaturesDialog = true"
+                      (mouseleave)="showFeaturesDialog = false"
+                    >
+                      Features
+                    </button>
+                    <button
+                      class="parameters-button styled-button"
+                      (click)="showParameters = !showParameters; setDialogPosition($event)"
+                      (mouseenter)="showParametersDialog = true"
+                      (mouseleave)="showParametersDialog = false"
+                    >
+                      Parameters
+                    </button>
+                    <button
+                      class="select-button styled-button"
+                      (click)="goToConfigurationPage()"
+                    >
+                      Select
+                    </button>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+      <div *ngIf="showFeatures && showFeaturesDialog" class="dialog-container" [style.top]="dialogPosition.top" [style.left]="dialogPosition.left">
+        <h2 class="dialog-title">Product Features</h2>
+        <ul class="dialog-list">
+          <li *ngFor="let feature of selectedProduct.features" class="dialog-list-item">{{ feature }}</li>
+        </ul>      </div>
+      
+      <div *ngIf="showParameters && showParametersDialog" class="dialog-container" [style.top]="dialogPosition.top" [style.left]="dialogPosition.left">
+        <h2 class="dialog-title">Product Parameters</h2>
+        <ul class="dialog-list">
+          <li *ngFor="let parameter of selectedProduct.parameters" class="dialog-list-item">{{ parameter }}</li>
+        </ul>      </div>
+      
+</body>
+
+</html>
